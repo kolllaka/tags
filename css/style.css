@@ -30,6 +30,7 @@ body {
   cursor: pointer;
   background-color: black;
   position: relative;
+  transition: all 0.2s ease 0s;
 }
 .tags__item::before {
   content: attr(data-num);
@@ -39,7 +40,8 @@ body {
   width: 100%;
   height: 100%;
   color: rgb(134, 58, 141);
-  font-size: 2em;
+  text-align: start;
+  font-size: 1.5em;
 }
 .tags__bg {
   background: url("../img/confused.png") center center/100% no-repeat;
