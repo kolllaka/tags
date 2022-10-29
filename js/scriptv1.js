@@ -1,7 +1,7 @@
 const bg = document.querySelector('.tags__bg'),
 	tags = document.querySelector('.tags__body'),
 	tag = tags.querySelectorAll('.tags__item'),
-	btn = document.querySelector('button');
+	btnNewGame = document.querySelector('.btn-newgame');
 
 const picX = 4;
 const picY = 4;
@@ -168,16 +168,37 @@ function check() {
 		// alert('Победа!');
 		tags.style.display = "none";
 		bg.style.display = "block";
+
+		clearInterval(interval);
 	}
 }
 
+// tags.addEventListener('click', function () {
+// 	clearInterval(interval);
+// 	interval = setInterval(startTimer, 1000);
+// }, { once: true });
+let once = true;
+let interval;
+
 tags.addEventListener('click', (e) => {
+	if (once) {
+		clearInterval(interval);
+		interval = setInterval(startTimer, 1000);
+		once = false;
+	}
 	bgChange(e);
 	check();
 });
-btn.addEventListener('click', () => {
+
+btnNewGame.addEventListener('click', () => {
 	tags.style.display = '';
 	bg.style.display = "";
+
+
+	clearInterval(interval);
+	clearFields();
+	once = true;
+
 	generator();
 	deletePic();
 	create();

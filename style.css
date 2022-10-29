@@ -14,8 +14,8 @@ body {
 .tags__body {
 	flex: 0 0 auto;
 	display: grid;
-	width: 100vh;
-	height: 100vh;
+	width: 50vh;
+	height: 50vh;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	/* display: none; */
 }
@@ -36,6 +36,16 @@ body {
 	color: rgb(134, 58, 141);
 	font-size: 2em;
 }
+
+.tags__ui {
+}
+.ui {
+}
+.ui__btn {
+}
+.ui__timer {
+}
+
 
 .annotation{
 	margin-left: 20px;
