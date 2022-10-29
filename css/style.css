@@ -57,10 +57,36 @@ body {
   gap: 10%;
 }
 .ui__btn {
+  position: relative;
   cursor: pointer;
   border: 1px solid red;
   border-radius: 5px;
   padding: 2px 10px;
+}
+.ui__btn ~ .volume {
+  padding: 2px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("../icons/volume.png");
+  background-size: 150%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.ui__btn ~ .novolume::before, .ui__btn ~ .novolume::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -50%;
+  width: 20px;
+  height: 1px;
+  background: red;
+}
+.ui__btn ~ .novolume::before {
+  transform: translate(50%, -50%) rotate(45deg);
+}
+.ui__btn ~ .novolume::after {
+  transform: translate(50%, -50%) rotate(-45deg);
 }
 .annotation {
   margin-left: 20px;

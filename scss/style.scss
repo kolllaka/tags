@@ -62,6 +62,14 @@ body {
 	}
 }
 
+.tags {
+
+	// .tags__ui
+
+	&__ui {
+	}
+}
+
 .ui {
 	display: flex;
 	justify-content: center;
@@ -69,10 +77,38 @@ body {
 	gap: 10%;
 	// .ui__btn
 	&__btn {
+		position: relative;
 		cursor: pointer;
 		border: 1px solid red;
 		border-radius: 5px;
 		padding: 2px 10px;
+		~.volume {
+			padding: 2px;
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			background-image: url('../icons/volume.png');
+			background-size: 150%;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+		~.novolume{
+			&::before, &::after{
+				content: "";
+				position: absolute;
+				top: 50%;
+				left: -50%;
+				width: 20px;
+				height: 1px;
+				background: red;
+			}
+			&::before{
+				transform: translate(50%, -50%) rotate(45deg);
+			}
+			&::after{
+				transform: translate(50%, -50%) rotate(-45deg);
+			}
+		}
 	}
 
 	// .ui__timer

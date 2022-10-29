@@ -1,7 +1,10 @@
 const bg = document.querySelector('.tags__bg'),
 	tags = document.querySelector('.tags__body'),
 	tag = tags.querySelectorAll('.tags__item'),
-	btnNewGame = document.querySelector('.btn-newgame');
+	btnNewGame = document.querySelector('.btn-newgame'),
+	btnVol = document.querySelector('.volume'),
+	audioEl = btnVol.querySelector('audio');
+
 
 const picX = 4;
 const picY = 4;
@@ -173,12 +176,14 @@ function check() {
 	}
 }
 
-// tags.addEventListener('click', function () {
-// 	clearInterval(interval);
-// 	interval = setInterval(startTimer, 1000);
-// }, { once: true });
-let once = true;
-let interval;
+let once = true,
+	interval,
+	volume = true;
+
+btnVol.addEventListener('click', () => {
+	btnVol.classList.toggle("novolume");
+	volume = !volume;
+});
 
 tags.addEventListener('click', (e) => {
 	if (once) {
@@ -186,6 +191,11 @@ tags.addEventListener('click', (e) => {
 		interval = setInterval(startTimer, 1000);
 		once = false;
 	}
+
+	if (volume) {
+		audioEl.play();
+	}
+
 	bgChange(e);
 	check();
 });
@@ -193,7 +203,6 @@ tags.addEventListener('click', (e) => {
 btnNewGame.addEventListener('click', () => {
 	tags.style.display = '';
 	bg.style.display = "";
-
 
 	clearInterval(interval);
 	clearFields();
