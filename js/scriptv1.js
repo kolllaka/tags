@@ -5,7 +5,7 @@ const bg = document.querySelector('.tags__bg'),
 	btnVol = document.querySelector('.volume'),
 	audioEl = btnVol.querySelector('audio');
 
-const audioWinEl = new Audio('../audio/are-ya-winning-son.mp3');
+const audioWinEl = new Audio('./audio/are-ya-winning-son.mp3');
 
 
 const picX = 4;
@@ -177,7 +177,9 @@ function check() {
 
 		clearInterval(interval);
 
-		audioWinEl.play();
+		if (volume) {
+			audioWinEl.play();
+		}
 	}
 }
 
