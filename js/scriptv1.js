@@ -5,7 +5,8 @@ const bg = document.querySelector('.tags__bg'),
 	btnVol = document.querySelector('.volume'),
 	audioEl = btnVol.querySelector('audio');
 
-import soundWin from '../audio/are-ya-winning-son.mp3'
+const audioWinEl = new Audio('../audio/are-ya-winning-son.mp3');
+
 
 const picX = 4;
 const picY = 4;
@@ -152,6 +153,7 @@ function bgChange(e) {
 	// check();
 };
 
+
 function check() {
 	finish = true;
 
@@ -175,8 +177,6 @@ function check() {
 
 		clearInterval(interval);
 
-
-		const audioWinEl = new Audio(soundWin);
 		audioWinEl.play();
 	}
 }
