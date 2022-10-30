@@ -173,6 +173,8 @@ function check() {
 		bg.style.display = "block";
 
 		clearInterval(interval);
+		audioWinEl = new Audio('../audio/are-ya-winning-son.mp3');
+		audioWinEl.play();
 	}
 }
 

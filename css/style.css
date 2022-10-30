@@ -54,7 +54,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10%;
+  gap: 5%;
 }
 .ui__btn {
   position: relative;
