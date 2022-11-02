@@ -1,10 +1,12 @@
-const timerEl = document.querySelector('.ui__timer'),
-	startBtn = document.querySelector('.start');
+const timerEl = document.querySelector('.ui-tag__timer');
 
 let minute = 00,
 	second = 00,
 	minuteInner,
 	secondInner;
+
+let once = true,
+	interval;
 
 // Listeners
 // startBtn.addEventListener('click', () => {

@@ -6,53 +6,30 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="./css/style.css">
-	<title>tags</title>
+	<title>tagssssss</title>
 </head>
 
 <body>
-	<div class="tags">
-		<div class="tags__title">Игра в пятнашки</div>
-		<div class="tags__ui ui">
-			<div class="ui__btn btn-newgame">новая игра</div>
-			<div class="ui__btn volume"><audio src="./audio/schelchok-kompyuternoy-myishki.mp3"></audio></div>
-			<div class="ui__timer">00:00</div>
+	<div class="tag">
+		<div class="tag__title">Игра в пятнашки</div>
+		<div class="tag__ui ui-tag">
+			<div class="ui-tag__btn">новая игра</div>
+			<div class="ui-tag__vol">
+				<div class="volume">
+					<img src="./icons/volume.png" alt="громкость">
+					<audio src="./audio/schelchok-kompyuternoy-myishki.mp3"></audio>
+				</div>
+			</div>
+			<div class="ui-tag__timer">00:00</div>
 		</div>
-		<div class="tags__body">
-			<div id="0" class="tags__item"></div>
-			<div id="1" class="tags__item"></div>
-			<div id="2" class="tags__item"></div>
-			<div id="3" class="tags__item"></div>
-			<div id="4" class="tags__item"></div>
-			<div id="5" class="tags__item"></div>
-			<div id="6" class="tags__item"></div>
-			<div id="7" class="tags__item"></div>
-			<div id="8" class="tags__item"></div>
-			<div id="9" class="tags__item"></div>
-			<div id="10" class="tags__item"></div>
-			<div id="11" class="tags__item"></div>
-			<div id="12" class="tags__item"></div>
-			<div id="13" class="tags__item"></div>
-			<div id="14" class="tags__item"></div>
-			<div id="15" class="tags__item"></div>
-		</div>
-		<div class="tags__bg">
-			<!-- <img src="/img/confused.png" alt=""> -->
+		<div class="tag__body"></div>
+		<div class="tag__win">
+			<img src="" alt="">
 		</div>
 	</div>
-	<!-- <div class="annotation">
-		<h1>
-			Игра в пятнашки!
-		</h1>
-		<p>
-			Собери номера (в верхнем левом углу) по порядку слева-направо сверху-вниз, чтобы собрать картинку
-		</p>
-		<div class="buttons">
-			<button>сгенерировать</button>
-		</div>
-	</div> -->
-</body>
 
-<script src="./js/scriptv1.js"></script>
-<script src="./js/timer.js"></script>
+	<script src="./js/script.js"></script>
+	<script src="./js/timer.js"></script>
+</body>
 
 </html>

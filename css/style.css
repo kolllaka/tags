@@ -4,104 +4,112 @@ body {
   box-sizing: border-box;
 }
 
-.tags {
-  margin: 10vh auto;
-  flex: 0 0 auto;
-  text-align: center;
-  width: 70vh;
-  height: 70vh;
+.tag {
+  width: 80vh;
+  height: 80vh;
+  margin: 0 auto;
 }
-.tags__title {
-  font-size: 30px;
-  font-weight: 900;
-  margin-bottom: 10px;
-}
-.tags__ui {
-  margin-bottom: 20px;
-}
-.tags__body {
-  height: 100%;
-  display: grid;
+.tag__title {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 40px;
+  color: rebeccapurple;
+}
+.tag__ui {
+  margin-bottom: 15px;
+}
+.tag__body {
+  width: 100%;
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2px;
 }
-.tags__item {
-  margin: 2px;
-  cursor: pointer;
-  background-color: black;
+.tag__canvas {
+  width: 100%;
   position: relative;
-  transition: all 0.2s ease 0s;
+  cursor: pointer;
+  transition: all 5s ease 0s;
 }
-.tags__item::before {
-  content: attr(data-num);
+.tag__win {
+  display: none;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+.tag__win img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  color: rgb(134, 58, 141);
-  text-align: start;
-  font-size: 1.5em;
-}
-.tags__bg {
-  background: url("../img/confused.png") center center/100% no-repeat;
-  display: none;
-  width: 100%;
-  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: top;
+     object-position: top;
 }
 
-.ui {
+.ui-tag {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5%;
+  gap: 15px;
+  color: rebeccapurple;
 }
-.ui__btn {
-  position: relative;
-  cursor: pointer;
-  border: 1px solid red;
+.ui-tag__btn {
+  padding: 5px 10px;
+  border: 1px solid rebeccapurple;
   border-radius: 5px;
-  padding: 2px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
-.ui__btn ~ .volume {
-  padding: 2px;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-image: url("../icons/volume.png");
-  background-size: 150%;
-  background-repeat: no-repeat;
-  background-position: center;
+.ui-tag__btn:hover {
+  opacity: 0.75;
 }
-.ui__btn ~ .novolume::before, .ui__btn ~ .novolume::after {
+.ui-tag__btn:active {
+  opacity: 0.5;
+}
+.ui-tag__vol .volume {
+  cursor: pointer;
+  width: 30px;
+  padding-top: 100%;
+  position: relative;
+}
+.ui-tag__vol .volume:hover {
+  opacity: 0.75;
+}
+.ui-tag__vol .volume:active {
+  opacity: 0.5;
+}
+.ui-tag__vol .volume img {
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.ui-tag__vol .novolume {
+  position: relative;
+}
+.ui-tag__vol .novolume::before, .ui-tag__vol .novolume::after {
+  z-index: 3;
   content: "";
   position: absolute;
   top: 50%;
   left: -50%;
-  width: 20px;
+  width: 30px;
   height: 1px;
   background: red;
 }
-.ui__btn ~ .novolume::before {
-  transform: translate(50%, -50%) rotate(45deg);
+.ui-tag__vol .novolume::before {
+  transform: translate(50%, 0) rotate(45deg);
 }
-.ui__btn ~ .novolume::after {
-  transform: translate(50%, -50%) rotate(-45deg);
-}
-.annotation {
-  margin-left: 20px;
-  font-size: 40px;
-  flex: 1 1 auto;
-  width: 100%;
-}
-
-.buttons {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button {
-  width: 30%;
+.ui-tag__vol .novolume::after {
+  transform: translate(50%, 0) rotate(-45deg);
 }
