@@ -1,165 +1,279 @@
-tags = document.querySelector('.tags');
-tag = tags.querySelectorAll('.tag');
-btn = document.querySelector('button')
+const picCountX = 4,
+	picCountY = 4;
+let tagBody = document.querySelector('.tag__body'),
+	tagWin = document.querySelector('.tag__win'),
+	btnNewGame = document.querySelector('.ui-tag__btn'),
+	btnVol = document.querySelector('.ui-tag__vol');
 
-const picX = 4;
-const picY = 4;
-// const pic = [
-// 	[{ id: 0, val: 0, con: 'red' }, { id: 1, val: 1, con: 'gray' }, { id: 2, val: 1, con: 'gray' }, { id: 3, val: 1, con: 'gray' }],
-// 	[{ id: 4, val: 1, con: 'gray' }, { id: 5, val: 1, con: 'gray' }, { id: 6, val: 1, con: 'gray' }, { id: 7, val: 1, con: 'gray' }],
-// 	[{ id: 8, val: 1, con: 'gray' }, { id: 9, val: 1, con: 'gray' }, { id: 10, val: 1, con: 'gray' }, { id: 11, val: 1, con: 'gray' }],
-// 	[{ id: 12, val: 1, con: 'gray' }, { id: 13, val: 1, con: 'gray' }, { id: 14, val: 1, con: 'gray' }, { id: 15, val: 1, con: 'gray' }],
-// ];
-// const pic = [
-// 	[{ id: 0, val: 0, con: 'white' }, { id: 1, val: 1, con: 2 }, { id: 2, val: 1, con: 3 }, { id: 3, val: 1, con: 4 }],
-// 	[{ id: 4, val: 1, con: 2 }, { id: 5, val: 1, con: 3 }, { id: 6, val: 1, con: 4 }, { id: 7, val: 1, con: 1 }],
-// 	[{ id: 8, val: 1, con: 3 }, { id: 9, val: 1, con: 4 }, { id: 10, val: 1, con: 1 }, { id: 11, val: 1, con: 2 }],
-// 	[{ id: 12, val: 1, con: 4 }, { id: 13, val: 1, con: 1 }, { id: 14, val: 1, con: 2 }, { id: 15, val: 1, con: 3 }],
-// ];
+const audioWinEl = new Audio('./audio/are-ya-winning-son.mp3');
 
-// const arr = [];
-// function generator() {
-// 	var i = 0,
-// 		count = 15,
-// 		diff,
-// 		curr,
-// 		limits = [1, 15];
+var hole = {};
 
-// 	diff = limits[1] - limits[0];
-// 	while (i++ < count && (diff >= (count - 1))) {// В случае, если количество чисел на выходе превышает максимальное количество уникальных
-// 		do {
-// 			curr = Math.floor(Math.random() * (diff + 1) + limits[0]);
-// 		} while ((arr.indexOf(curr) != -1));
-// 		arr.push(curr);
-// 	}
-// 	console.log(arr);
-// }
-// generator();
+// let arr = new Array(),
+let count = picCountX * picCountY;
 
-var arr = new Array;
-function generator() {
-	var rsh = 1;
+let volume = true;
+
+arr = generatorTags(count);
+
+console.log(arr);
+
+let Cell = new Array;
+arr.forEach((el, id) => {
+	Cell[id] = fillCell(id);
+});
+console.log(Cell[1]);
+
+
+// Генерируем пустые ячейки
+function generateField(length) {
+	for (let index = 0; index < length; index++) {
+		let field = document.createElement('canvas');
+		field.id = index;
+		field.className = 'tag__canvas';
+		tagBody.appendChild(field);
+	}
+}
+generateField(16)
+
+
+// Генерирует случайный Array() пятнашек из count + 1 значений; 
+// "дырка" имеет номер count и значение count - 1
+function generatorTags(count) {
+	var rsh = 1,
+		arr = new Array();
+
+
 	while (rsh % 2) {
-		for (var j = 0; j < 15; j++) arr[j] = j + 1;
+		for (var j = 0; j < (count - 1); j++) arr[j] = j;
 		arr.sort(new Function('x', 'y', 'return Math.random () - Math.random ()'));
-		for (var rsh = j = 0; j < 14; rsh += s, j++)
-			for (var s = 0, k = j + 1; k < 15; k++) if (arr[k] < arr[j]) s++;
+		for (var rsh = j = 0; j < (count - 2); rsh += s, j++)
+			for (var s = 0, k = j + 1; k < (count - 1); k++) if (arr[k] < arr[j]) s++;
 	}
 
-	console.log(arr);
+	arr[count - 1] = count - 1;
+
+	return arr;
 }
-generator();
 
-var pic = new Array;
-function create() {
-	tag.forEach((element, index) => {
-		let ox = index % picX;
-		let oy = Math.floor(index / picY);
-		// console.log('index:', index, 'ox:', ox, 'oy:', oy);
+// Создаёт объект значений пятнашек по id
+function fillCell(id) {
+	let ox = id % picCountX,
+		oy = Math.floor(id / picCountY),
+		cell = {};
 
+	cell = {
+		id: id,
+		ox: ox,
+		oy: oy,
+		val: arr[id],
+		isTruePlace: id == arr[id],
+		isHole: arr[id] == picCountX * picCountY - 1,
+	}
 
-		let obj = {}
-		obj.id = index;
-		if (ox == 3 && oy == 3) {
-			obj.val = 0;
-			obj.con = 'white';
-			element.dataset.num = '';
-		} else {
-			obj.val = 1;
-			//obj.con = Math.floor(Math.random() * (4) + 1);
-			obj.con = arr[index];
-			//element.innerHTML = '<span>' + arr[index - 1] + '</span>'
-			element.dataset.num = arr[index];
-		}
-		pic.push(obj);
-	});
+	if (cell.isHole) {
+		hole = cell;
+	}
 
-	// console.log(pic);
+	return cell
 }
-create();
 
-function update() {
-	tag.forEach((element, index) => {
-		let urlimg = 'url(./img/' + pic[index].con + '.png) no-repeat center/100%';
 
-		element.style.background = urlimg;
-	});
+
+//const imageURL = './img/confused.png';
+let imageURL = rndIMG();
+let inputImage = new Image();
+tagWin.querySelector('img').src = imageURL;
+inputImage.onload = function () {
+	arr.forEach((el, id) => {
+		//console.log(id, '>', el);
+
+		// let ox = el % 4;
+		// let oy = Math.floor(el / 4);
+
+		drawImg(id)
+	})
+};
+inputImage.src = imageURL;
+
+// let outputImage = document.createElement('canvas');
+// Отрисовывает пазл по заданному id
+function drawImg(id) {
+	let cellObj = fillCell(arr[id])
+	let canvas = document.getElementById(id);
+	let ctx = canvas.getContext('2d');
+
+	canvas.width = inputImage.naturalWidth / 4;
+	canvas.height = inputImage.naturalWidth / 4;
+
+	if (id == hole.id) {
+		ctx.fillStyle = 'white';
+		ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+		return
+	}
+
+
+	// console.log(ox, 'x', oy);
+
+	ctx.drawImage(inputImage, canvas.width * (-1) * cellObj.ox, (-1) * canvas.height * cellObj.oy);
+	// ctx.drawImage(inputImage, 0, 0);
+	// ctx.drawImage(this, 0, 0, this.width, this.height);
+	ctx.font = "5em Verdana";
+	ctx.fillStyle = "#863a8d";
+	ctx.fillText(arr[id] + 1, 10, 60);
 }
-update();
 
 function deletePic() {
-	tag.forEach((element, index) => {
-		pic.pop();
+	arr.forEach((element, id) => {
+		let canvas = document.getElementById(id);
+		canvas.remove();
+	});
+}
+
+
+// Поменять элементы местами
+function swap(newVal, oldVal) {
+	[arr[oldVal], arr[newVal]] = [arr[newVal], arr[oldVal]];
+	hole = Cell[newVal];
+
+	window.update = function () {
+		drawImg(newVal);
+		drawImg(oldVal);
+	}
+}
+
+// Проверка на победу
+function check() {
+	let finish = true;
+
+	arr.forEach((el, id) => {
+		let cellObj = fillCell(id);
+
+		finish = finish && cellObj.isTruePlace;
 	});
 
-	// console.log(pic);
+	return finish
 }
 
-function swap(e, newVal, oldVal) {
-	// console.log('swap');
 
-	let swp = pic[newVal].val;
-	pic[newVal].val = pic[oldVal].val;
-	pic[oldVal].val = swp;
-
-	swp = pic[newVal].con;
-	pic[newVal].con = pic[oldVal].con;
-	pic[oldVal].con = swp;
-	tag[pic[newVal].id].style.background = 'url(./img/' + pic[newVal].con + '.png) no-repeat center/100%';
-	tag[pic[oldVal].id].style.background = 'url(./img/' + pic[oldVal].con + '.png) no-repeat center/100%';
-
-	swp = tag[newVal].dataset.num;
-	tag[newVal].dataset.num = tag[oldVal].dataset.num;
-	tag[oldVal].dataset.num = swp;
+function idfromCoor(ox, oy) {
+	return id = oy * picCountY + ox;
 }
 
-function bgChange(e) {
+tagBody.addEventListener('click', (e) => {
 
-	if (e.target.classList.contains('tag')) {
-		let ox = e.target.id % picX;
-		let oy = Math.floor(e.target.id / picY);
+	if (once) {
+		clearInterval(interval);
+		interval = setInterval(startTimer, 1000);
+		once = false;
+	}
 
-		// console.log('нажата:', ox, 'x', oy)
+	if (volume) {
+		btnVol.querySelector('audio').play();
+	}
 
-		if ((ox - 1) >= 0) {
-			let newVal = oy * picY + ox - 1;
-			// console.log((ox - 1), 'x', oy, ':', pic[newVal].val)
-			if (pic[newVal].val == 0) {
-				swap(e, newVal, e.target.id);
-			}
+	if (e.target.classList.contains('tag__canvas')) {
+		pushId = e.target.id;
+		cellPush = Cell[pushId];
+		console.log("нажата", pushId);
+
+		if (cellPush.ox == hole.ox) {
+			if (cellPush.oy < hole.oy) {
+				while (cellPush.oy < hole.oy) {
+					// console.log("swap", cellPush.ox, 'x', (hole.oy - 1));
+					swap(idfromCoor(cellPush.ox, (hole.oy - 1)), hole.id);
+					update();
+				};
+			};
+
+			if (cellPush.oy > hole.oy) {
+				while (cellPush.oy > hole.oy) {
+					// console.log("swap", cellPush.ox, 'x', (hole.oy + 1));
+					swap(idfromCoor(cellPush.ox, (hole.oy + 1)), hole.id);
+					update();
+				};
+			};
 		}
 
-		if ((ox + 1) / picX < 1) {
-			// console.log((ox + 1), 'x', oy, ':', pic[newVal].val)
-			let newVal = oy * picY + ox + 1;
-			if (pic[newVal].val == 0) {
-				swap(e, newVal, e.target.id);
-			}
+
+		if (cellPush.oy == hole.oy) {
+			// console.log("поменять по оси x");
+
+			if (cellPush.ox < hole.ox) {
+				while (cellPush.ox < hole.ox) {
+					// console.log("swap", (hole.ox - 1), 'x', cellPush.oy);
+					swap(idfromCoor((hole.ox - 1), cellPush.oy), hole.id);
+					update();
+				};
+			};
+
+			if (cellPush.ox > hole.ox) {
+				while (cellPush.ox > hole.ox) {
+					// console.log("swap", (hole.ox + 1), 'x', cellPush.oy);
+					swap(idfromCoor((hole.ox + 1), cellPush.oy), hole.id);
+					update();
+				};
+			};
 		}
 
-		if ((oy - 1) >= 0) {
-			// console.log(ox, 'x', (oy - 1), ':', pic[newVal].val)
-			let newVal = (oy - 1) * picY + ox;
-			if (pic[newVal].val == 0) {
-				swap(e, newVal, e.target.id);
-			}
+		// swap(e.target.id - 1, e.target.id)
+		//console.log(arr);
+
+
+	}
+
+	if (check()) {
+		console.log('Победа');
+
+		tagBody.style.display = 'none';
+		tagWin.style.display = 'block';
+
+		clearInterval(interval);
+
+		if (volume) {
+			audioWinEl.play();
 		}
-
-		if ((oy + 1) / picY < 1) {
-			// console.log(ox, 'x', (oy + 1), ':', pic[newVal].val)
-			let newVal = (oy + 1) * picY + ox;
-			if (pic[newVal].val == 0) {
-				swap(e, newVal, e.target.id);
-			}
-		}
-
-	};
-};
-
-tags.addEventListener('click', bgChange);
-btn.addEventListener('click', () => {
-	generator();
-	deletePic();
-	create();
-	update();
+	}
 });
+
+btnVol.addEventListener('click', () => {
+	btnVol.querySelector('.volume').classList.toggle("novolume");
+	volume = !volume;
+});
+
+btnNewGame.addEventListener('click', () => {
+	tagBody.style.display = '';
+	tagWin.style.display = '';
+
+	clearInterval(interval);
+	clearFields();
+	once = true;
+
+	deletePic();
+	generateField(16);
+
+	arr = generatorTags(count);
+	console.log(arr);
+	imageURL = rndIMG();
+	console.log(inputImage);
+	tagWin.querySelector('img').src = imageURL;
+	inputImage.onload = function () {
+		arr.forEach((el, id) => {
+			drawImg(id)
+		})
+	};
+	inputImage.src = imageURL;
+
+	let Cell = new Array;
+	arr.forEach((el, id) => {
+		Cell[id] = fillCell(id);
+	});
+});
+
+function rndIMG() {
+	imgArr = ["123", "confused", "zoi"];
+
+	let rnd = Math.floor(Math.random() * imgArr.length);
+	return './img/' + imgArr[rnd] + '.png';
+}
