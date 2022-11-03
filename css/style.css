@@ -3,11 +3,27 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+body.dark {
+  background-color: black;
+}
+
+.change_theme {
+  position: fixed;
+  top: 0;
+  left: 80%;
+  background-color: rebeccapurple;
+  padding: 2px 5px;
+  border: 1px dashed gray;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
 
 .tag {
   width: 80vh;
-  height: 80vh;
-  margin: 0 auto;
+  height: auto;
+  margin: 10px auto;
+  background-color: rgb(231, 223, 223);
+  padding: 10px;
 }
 .tag__title {
   display: flex;
