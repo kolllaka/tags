@@ -104,10 +104,10 @@ body.dark {
 .ui-tag__vol .volume img {
   z-index: 1;
   position: absolute;
-  width: 100%;
+  width: 70%;
   top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   -o-object-fit: cover;
      object-fit: cover;
 }
