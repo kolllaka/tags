@@ -4,7 +4,14 @@ let btnChangeTheme = document.querySelector('.change_theme');
 
 if (btnChangeTheme) {
 	btnChangeTheme.addEventListener('click', () => {
-		btnChangeTheme.classList.toggle('dark');
-		document.body.classList.toggle('dark');
+		let wasDarkMode = localStorage.getItem('dark') == 'true';
+
+		localStorage.setItem('dark', !wasDarkMode)
+		btnChangeTheme.classList.toggle('dark', !wasDarkMode);
+		document.body.classList.toggle('dark', !wasDarkMode);
 	});
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+	document.body.classList.toggle('dark', localStorage.getItem('dark') == 'true')
+});

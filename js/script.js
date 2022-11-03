@@ -238,8 +238,20 @@ tagBody.addEventListener('click', (e) => {
 });
 
 btnVol.addEventListener('click', () => {
-	btnVol.querySelector('.volume').classList.toggle("novolume");
+	let wasVolume = localStorage.getItem('volume') == 'true';
+
+	localStorage.setItem('volume', !wasVolume)
+	btnVol.querySelector('.volume').classList.toggle("novolume", !wasVolume);
 	volume = !volume;
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+	let wasVolume = localStorage.getItem('volume') == 'true';
+
+	btnVol.querySelector('.volume').classList.toggle("novolume", wasVolume);
+	if (wasVolume) {
+		volume = !volume;
+	}
 });
 
 btnNewGame.addEventListener('click', () => {
