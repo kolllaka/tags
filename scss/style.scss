@@ -16,6 +16,12 @@ body {
 	border-top: none;
 	border-radius: 0 0 5px 5px;
 	cursor: pointer;
+	&:hover{
+		opacity: 0.75;
+	}
+	&:active{
+		opacity: 0.5;
+	}
 }
 
 .tag {

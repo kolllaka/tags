@@ -18,6 +18,12 @@ body.dark {
   border-radius: 0 0 5px 5px;
   cursor: pointer;
 }
+.change_theme:hover {
+  opacity: 0.75;
+}
+.change_theme:active {
+  opacity: 0.5;
+}
 
 .tag {
   width: 80vh;
